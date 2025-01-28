@@ -1255,3 +1255,4 @@ class FlagGenerator {
     }
 }
 
+await createScene();
