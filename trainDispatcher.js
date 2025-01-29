@@ -151,7 +151,7 @@ var createScene = async function () {
     return scene;
 };
 
-whindow.init = () {
+window.init = () => {
     scoreManager.init(scoreManagerModel, (updatedField, updatedOf) => {
         if (updatedField == "L") {
             scoreModel.value += 10 * Math.pow(2, levelModel.value);
