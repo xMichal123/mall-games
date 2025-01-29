@@ -148,6 +148,10 @@ var createScene = async function () {
         cameraManager.manage();
     });
 
+    return scene;
+};
+
+whindow.init = () {
     scoreManager.init(scoreManagerModel, (updatedField, updatedOf) => {
         if (updatedField == "L") {
             scoreModel.value += 10 * Math.pow(2, levelModel.value);
@@ -166,9 +170,7 @@ var createScene = async function () {
     );
 
     gameOverManager.init(() => { gameManager.restart(); });
-
-    return scene;
-};
+}
 
 const RailNodeType = {
   STRAIGHT: 1,
