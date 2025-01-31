@@ -1,3 +1,19 @@
+const levelModel = { initials: "L", name: "Max Level Reached", value: 1, color: "white" };
+const killsModel = { initials: "K", name: "Kills", value: 0 };
+const scoreModel = { initials: "S", name: "TOTAL SCORE", value: 0, color: "yellow", width: "200px", weight: "bold" };
+
+const scoreManagerModel = [
+    levelModel,
+    killsModel,
+    scoreModel
+];
+
+const gameOverModel = [
+    levelModel,
+    killsModel,
+    scoreModel
+];
+
 const spriteChangeInterval = 200; // 200 ms interval for frame change
 const zDepthDivisor = 10; // Divisor for calculating z-depth
 const fightInterval = 1000; // Time interval to start new pairs for the fight
@@ -329,13 +345,32 @@ var createScene = function () {
 
     advancedTexture = BABYLON.GUI.AdvancedDynamicTexture.CreateFullscreenUI("UI");
 
-    introManager.init("https://raw.githubusercontent.com/xMichal123/publictests/main/swordsmen-algebra-intro.webp", () => {
-        makeTasks();
-        wheel.actionManager = wheelActionManager;
-    });
-
     return scene;
 };
+
+window.init = () => {
+    scoreManager.init(scoreManagerModel, (updatedField, updatedOf) => {
+        if (updatedField == "L") {
+            scoreModel.value += 10 * Math.pow(2, levelModel.value);
+        }
+
+        if (updatedField == "T" && updatedOf > 0) {
+            scoreModel.value += updatedOf * Math.pow(2, levelModel.value);
+        }
+    });
+
+    gameControlsManager.init("https://raw.githubusercontent.com/xMichal123/publictests/main/swordsmen-algebra-intro.webp",
+        () => { 
+            makeTasks();
+            wheel.actionManager = wheelActionManager;
+        },
+        () => { restart(); },
+        () => { },
+        () => { }
+    );
+
+    gameOverManager.init(() => { restart(); });
+}
 
     function moveDown() {
         moving |= upMode;
@@ -713,7 +748,6 @@ class GuiManager {
         horizontalPanel.addControl(this._trainText);
 
         this._animTick = 0;
-        this._intro = true;
 
         this.rect1 = new BABYLON.GUI.Rectangle();
         this.rect1.width = 0.4;
