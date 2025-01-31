@@ -54,7 +54,6 @@ let wheelActionManager = null;
 
 let guiManager = null;
 let scene = null;
-let advancedTexture = null;
 
 var createScene = function () {
     scene = new BABYLON.Scene(engine);
