@@ -59,8 +59,9 @@ let advancedTexture = null;
 
 var createScene = function () {
     scene = new BABYLON.Scene(engine);
+    window.gameScene = scene;
+
     // Initialize FollowCamera
-    
     var camera = new BABYLON.FollowCamera("followCamera", new BABYLON.Vector3(0, 0, -10), scene);
     camera.radius = 10; // Distance from target
     camera.heightOffset = 0; // Height from target
@@ -351,11 +352,11 @@ var createScene = function () {
 window.init = () => {
     scoreManager.init(scoreManagerModel, (updatedField, updatedOf) => {
         if (updatedField == "L") {
-            scoreModel.value += 10 * Math.pow(2, levelModel.value);
+            scoreModel.value += 100;
         }
 
-        if (updatedField == "T" && updatedOf > 0) {
-            scoreModel.value += updatedOf * Math.pow(2, levelModel.value);
+        if (updatedField == "K" && updatedOf > 0) {
+            scoreModel.value += updatedOf;
         }
     });
 
