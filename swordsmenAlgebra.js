@@ -106,9 +106,9 @@ var createScene = function () {
             upMode = !upMode;
             moving = true;
 
-            if (army1.soldiers.length === 0) {
+            /*if (army1.soldiers.length === 0) {
                 restart();
-            }
+            }*/
         })
     );
 
@@ -236,7 +236,7 @@ var createScene = function () {
                 });
             }
         } else {
-            gameOverManager.init(() => { restart(); });
+            gameOverManager.popup(gameOverModel);
             army2.soldiers.forEach((soldier1, index1) => {
                 soldier1.moveFront();
             });
@@ -323,9 +323,9 @@ var createScene = function () {
 
         if (task1 === null) {
             makeTasks();
-        } else if (army1.soldiers.length === 0) {
+        } /*else if (army1.soldiers.length === 0) {
             restart();
-        }
+        }*/
     });
 
     slideGestureDetector.onSlideDown(() => {
