@@ -1,4 +1,4 @@
-const levelModel = { initials: "L", name: "Max Level  Reached", value: 1, color: "white" };
+const levelModel = { initials: "L", name: "Max Level Reached", value: 1, color: "white" };
 const trainsModel = { initials: "T", name: "Trains Plus/Minus", value: 0 };
 const goodTrainsModel = { initials: "CD", name: "Correctly Dispatched", value: 0, color: "lightgreen" };
 const wrongTrainsModel = { initials: "WD", name: "Wrongly Dispatched", value: 0, color: "red" };
