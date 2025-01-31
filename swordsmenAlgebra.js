@@ -105,10 +105,6 @@ var createScene = function () {
         new BABYLON.ExecuteCodeAction(BABYLON.ActionManager.OnPickTrigger, function () {
             upMode = !upMode;
             moving = true;
-
-            /*if (army1.soldiers.length === 0) {
-                restart();
-            }*/
         })
     );
 
@@ -323,12 +319,6 @@ var createScene = function () {
                 }
                 break;
         }
-
-        /*if (task1 === null) {
-            makeTasks();
-        } else if (army1.soldiers.length === 0) {
-            restart();
-        }*/
     });
 
     slideGestureDetector.onSlideDown(() => {
@@ -381,6 +371,10 @@ window.init = () => {
     }
 
     function restart() {
+        army1.soldiers.forEach((soldier1, index1) => {
+            soldier1.release();
+        });
+
         army2.soldiers.forEach((soldier2, index2) => {
             soldier2.release();
         });
