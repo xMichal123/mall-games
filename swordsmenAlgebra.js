@@ -47,7 +47,6 @@ let sol1 = null;
 let task2 = null;
 let sol2 = null;
 
-let passed = 0;
 let fading = 1;
 
 let wheel = null;
@@ -108,9 +107,7 @@ var createScene = function () {
             upMode = !upMode;
             moving = true;
 
-            /*if (task1 === null) {
-                makeTasks();
-            } else*/ if (army1.soldiers.length === 0) {
+            if (army1.soldiers.length === 0) {
                 restart();
             }
         })
@@ -169,7 +166,7 @@ var createScene = function () {
                         if (index2 >= 0) {
                             army1.removeSoldier(index1);
                             army2.removeSoldier(index2);
-                            passed++;
+                            killsModel.value++;
                         }
                     }
                 }
@@ -199,13 +196,11 @@ var createScene = function () {
                         if (index1 >= 0) {
                             army1.removeSoldier(index1);
                             army2.removeSoldier(index2);
-                            passed++;
+                            killsModel.value++;
                         }
                     }
                 }
             });
-
-            guiManager.passedCountText.text = passed;
 
             fading -= fadingSpeed;
             fading = Math.max(0, fading);
@@ -214,6 +209,7 @@ var createScene = function () {
             guiManager.rect2.alpha = fading;
         } else if (army1.soldiers.length > 0) {
             if (!modeSolving) {
+                levelModel.value++;
                 makeTasks();
             }
 
@@ -241,7 +237,7 @@ var createScene = function () {
                 });
             }
         } else {
-            gameOverScreen.gameOver(1, 2, 3);
+            gameOverManager.init(() => { restart(); });
             army2.soldiers.forEach((soldier1, index1) => {
                 soldier1.moveFront();
             });
@@ -333,7 +329,6 @@ var createScene = function () {
         }
     });
 
-    gameOverScreen = new GameOverScreen();
     guiManager = new GuiManager();
 
     slideGestureDetector.onSlideDown(() => {
@@ -398,9 +393,9 @@ window.init = () => {
 
         modeSolving = false;
 
-        passed = 0;
-
-        guiManager.passedCountText.text = "0";
+        killsModel.value = 0;
+        levelModel.value = 1;
+        scoreModel.value = 0;
     }
 
     function makeTasks() {
@@ -720,36 +715,6 @@ function generateMathTask(complexity, solutionRange) {
 
 class GuiManager {
     constructor() {
-        // GUI for displaying passed pipes
-        const advancedTexture = BABYLON.GUI.AdvancedDynamicTexture.CreateFullscreenUI("UI");
-
-        // Create a horizontal StackPanel
-        var horizontalPanel = new BABYLON.GUI.StackPanel();
-        horizontalPanel.isVertical = false; // Set to false for horizontal stacking
-        horizontalPanel.top = "-40%";
-        horizontalPanel.left = "-40%";
-        horizontalPanel.height = "20px";
-        //horizontalPanel.horizontalAlignment = BABYLON.GUI.Control.HORIZONTAL_ALIGNMENT_LEFT;
-        //horizontalPanel.verticalAlignment = BABYLON.GUI.Control.VERTICAL_ALIGNMENT_TOP;
-        advancedTexture.addControl(horizontalPanel);
-
-        this._levelText = new BABYLON.GUI.TextBlock();
-        this._levelText.text = " L:1 ";
-        this._levelText.color = "white";
-        this._levelText.fontSize = 24;
-        this._levelText.width = "80px";
-        //this._levelText.height = "20px";
-        horizontalPanel.addControl(this._levelText);
-
-        this._trainText = new BABYLON.GUI.TextBlock();
-        this._trainText.text = "T:0 ";
-        this._trainText.color = "white";
-        this._trainText.fontSize = 24;
-        this._trainText.width = "80px";
-        horizontalPanel.addControl(this._trainText);
-
-        this._animTick = 0;
-
         this.rect1 = new BABYLON.GUI.Rectangle();
         this.rect1.width = 0.4;
         this.rect1.height = 0.34;
@@ -787,151 +752,6 @@ class GuiManager {
         this.rect2.onPointerClickObservable.add(() => {
             moveDown();
         });
-
-        // GUI for displaying passed armies
-        this.passedCountText = new BABYLON.GUI.TextBlock();
-        this.passedCountText.text = "0";
-        this.passedCountText.color = "white";
-        this.passedCountText.fontSize = 24;
-        this.passedCountText.top = "-40%";
-        this.passedCountText.left = "-40%";
-        advancedTexture.addControl(this.passedCountText);
-
-        const helpThis = this;
-
-        scene.onBeforeRenderObservable.add(() => {
-            if (this._animTick >= 0) {
-                if (this._animTick < 60) {
-                    this._animTick++;
-                } else {
-                    this._levelText.color = "white";
-                    this._trainText.color = "white";
-                    this._animTick = -1;
-                }
-            }
-        });
-    }
-
-    win() {
-        this.refresh();
-        this._trainText.color = "lightgreen";
-    }
-
-    lose() {
-        this.refresh();
-        this._trainText.color = "red";
-    }
-
-    levelUp() {
-        this.refresh();
-        this._levelText.color = "lightgreen";
-    }
-
-    refresh() {
-        this._animTick = 0;
-        this._levelText.text = " L:" + gameManager.level
-        this._trainText.text = " T:" + gameManager.trainPoints
-    }
-}
-
-
-
-class GameOverScreen {
-    constructor(scene) {
-        this.scene = scene;
-
-        // Create the advanced texture for the UI
-        this.advancedTexture = BABYLON.GUI.AdvancedDynamicTexture.CreateFullscreenUI("GameOverUI", true, scene);
-
-        // Add a background rectangle
-        this.background = new BABYLON.GUI.Rectangle();
-        this.background.width = "500px";
-        this.background.height = "400px";
-        this.background.color = "white";
-        this.background.thickness = 2;
-        this.background.background = "rgba(0, 0, 0, 0.7)";
-        this.background.cornerRadius = 20;
-        this.background.horizontalAlignment = BABYLON.GUI.Control.HORIZONTAL_ALIGNMENT_CENTER;
-        this.background.verticalAlignment = BABYLON.GUI.Control.VERTICAL_ALIGNMENT_CENTER;
-        this.advancedTexture.addControl(this.background);
-
-        // StackPanel for layout
-        this.panel = new BABYLON.GUI.StackPanel();
-        this.panel.width = "90%";
-        this.panel.isVertical = true;
-        this.panel.horizontalAlignment = BABYLON.GUI.Control.HORIZONTAL_ALIGNMENT_CENTER;
-        this.panel.verticalAlignment = BABYLON.GUI.Control.VERTICAL_ALIGNMENT_CENTER;
-        this.background.addControl(this.panel);
-
-        // Game over text
-        this.gameOverText = new BABYLON.GUI.TextBlock();
-        this.gameOverText.text = "Game Over";
-        this.gameOverText.fontSize = "36px";
-        this.gameOverText.height = "60px";
-        this.gameOverText.color = "white";
-        this.gameOverText.paddingBottom = "20px";
-        this.panel.addControl(this.gameOverText);
-
-        // Grid for fixed stats
-        this.grid = new BABYLON.GUI.Grid();
-        this.grid.width = "100%";
-        this.grid.height = "200px";
-        this.grid.addColumnDefinition(0.5); // 50% width for labels
-        this.grid.addColumnDefinition(0.5); // 50% width for values
-        this.grid.addRowDefinition(50); // Fixed height for rows
-        this.grid.addRowDefinition(50);
-        this.grid.addRowDefinition(50);
-        this.panel.addControl(this.grid);
-
-        // Add fixed labels
-        this.addLabel("Max Level Reached:", "white", 0);
-        this.addLabel("Correctly Dispatched:", "lightgreen", 1);
-        this.addLabel("Wrongly Dispatched:", "red", 2);
-
-        // Play again button
-        this.playAgainButton = BABYLON.GUI.Button.CreateSimpleButton("playAgain", "Play Again");
-        this.playAgainButton.width = "200px";
-        this.playAgainButton.height = "50px";
-        this.playAgainButton.color = "white";
-        this.playAgainButton.background = "green";
-        this.playAgainButton.paddingTop = "20px";
-        this.playAgainButton.onPointerClickObservable.add(() => {
-            this.hide(); // Hide on play again
-            restart(); // Custom callback for resetting the game
-        });
-        this.panel.addControl(this.playAgainButton);
-
-        this.hide(); // Initially hide the game-over screen
-    }
-
-    // Add a fixed label to the grid
-    addLabel(label, color, row) {
-        const labelText = new BABYLON.GUI.TextBlock();
-        labelText.text = label;
-        labelText.color = color;
-        labelText.textHorizontalAlignment = BABYLON.GUI.Control.HORIZONTAL_ALIGNMENT_LEFT;
-        this.grid.addControl(labelText, row, 0);
-
-        const valueText = new BABYLON.GUI.TextBlock();
-        valueText.text = "0"; // Default value
-        valueText.color = "white";
-        valueText.textHorizontalAlignment = BABYLON.GUI.Control.HORIZONTAL_ALIGNMENT_RIGHT;
-        this.grid.addControl(valueText, row, 1);
-
-        this[`valueRow${row}`] = valueText; // Store reference to value text
-    }
-
-    // Show the game-over screen with updated stats
-    gameOver(maxLevel, correctlyDispatched, wronglyDispatched) {
-        this.valueRow0.text = maxLevel.toString();
-        this.valueRow1.text = correctlyDispatched.toString();
-        this.valueRow2.text = wronglyDispatched.toString();
-        this.background.isVisible = true;
-    }
-
-    // Hide the game-over screen
-    hide() {
-        this.background.isVisible = false;
     }
 }
 
