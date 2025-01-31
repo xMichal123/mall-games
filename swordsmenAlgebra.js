@@ -208,7 +208,10 @@ var createScene = function () {
             guiManager.rect2.alpha = fading;
         } else if (army1.soldiers.length > 0) {
             if (!modeSolving) {
-                levelModel.value++;
+                if (killsModel.value > 0) {
+                    levelModel.value++;
+                }
+                
                 makeTasks();
             }
 
@@ -321,9 +324,9 @@ var createScene = function () {
                 break;
         }
 
-        if (task1 === null) {
+        /*if (task1 === null) {
             makeTasks();
-        } /*else if (army1.soldiers.length === 0) {
+        } else if (army1.soldiers.length === 0) {
             restart();
         }*/
     });
