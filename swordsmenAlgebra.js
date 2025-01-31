@@ -329,8 +329,6 @@ var createScene = function () {
         }
     });
 
-    guiManager = new GuiManager();
-
     slideGestureDetector.onSlideDown(() => {
         moveDown();
     })
@@ -339,12 +337,12 @@ var createScene = function () {
         moveUp();
     })
 
-    advancedTexture = BABYLON.GUI.AdvancedDynamicTexture.CreateFullscreenUI("UI");
-
     return scene;
 };
 
 window.init = () => {
+    guiManager = new GuiManager();
+
     scoreManager.init(scoreManagerModel, (updatedField, updatedOf) => {
         if (updatedField == "L") {
             scoreModel.value += 100;
