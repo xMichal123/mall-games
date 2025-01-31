@@ -935,3 +935,4 @@ class GameOverScreen {
     }
 }
 
+createScene();
