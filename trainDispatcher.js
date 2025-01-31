@@ -461,6 +461,7 @@ class GameManager {
         goodTrainsModel.value = 0;
         wrongTrainsModel.value = 0;
         levelModel.value = 1;
+        scoreModel.value = 1;
 
         this.start();
     }
