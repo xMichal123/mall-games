@@ -349,7 +349,7 @@ window.init = () => {
 
     scoreManager.init(scoreManagerModel, (updatedField, updatedOf) => {
         if (updatedField == "L") {
-            scoreModel.value += 100;
+            scoreModel.value = (levelModel.value - 1 ) * 100;
         }
 
         if (updatedField == "K" && updatedOf > 0) {
