@@ -335,6 +335,8 @@ var createScene = function () {
     slideGestureDetector.onSlideUp(() => {
         moveUp();
     })
+    
+    window.advancedTexture = BABYLON.GUI.AdvancedDynamicTexture.CreateFullscreenUI("UI", true, scene);
 
     return scene;
 };
