@@ -114,6 +114,7 @@ const createScene = function () {
         player.stopAnimation();
         ended = true;
         gameOver = true;
+        gameOverManager.popup(gameOverModel);
 
         // Set a timeout to prevent immediate restart
         canRestart = false;
@@ -179,7 +180,7 @@ const createScene = function () {
     }
 
     scene.onBeforeRenderObservable.add(() => {
-        if (ended) {
+        if (ended || gameControlsManager.paused) {
             return;
         }
 
@@ -256,7 +257,7 @@ const createScene = function () {
             started = true;
             verticalVelocity = JUMP_STRENGTH;
         } else if (gameOver && canRestart) {
-            resetGame(); // Restart game on space/tap/click if game over and cooldown passed
+            //resetGame(); // Restart game on space/tap/click if game over and cooldown passed
         } else if (!gameOver) {
             verticalVelocity = JUMP_STRENGTH;
         }
