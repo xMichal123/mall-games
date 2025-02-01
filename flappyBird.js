@@ -11,6 +11,49 @@ const gameOverModel = [
     scoreModel
 ];
 
+// Constants for sprite sizes and scaling
+const BACKGROUND_WIDTH = 144;
+const BACKGROUND_HEIGHT = 256;
+const GROUND_WIDTH = 168;
+const GROUND_HEIGHT = 56;
+const PLAYER_WIDTH = 17;
+const PLAYER_HEIGHT = 12;
+const PIPE_WIDTH = 26;
+const PIPE_HEIGHT = 160;
+
+const BACKGROUND_FLIP = 2.8;
+const GROUND_FLIP = 0.85;
+const BACKGROUND_SCALE = 20;
+const GROUND_SCALE = 24;
+const PLAYER_SCALE = 0.07;
+const PIPE_SCALE = 0.07;
+
+const BACKGROUND_Y_POSITION = 5;
+const GROUND_Y_POSITION = -8;
+const PLAYER_Y_INITIAL = 4;
+const PLAYER_Y_FLOOR = -3.7;
+const PLAYER_Y_ROOF = 6.5;
+
+// Dynamic pipe gap variables
+const MIN_PIPE_GAP = 13.5;
+const MAX_PIPE_GAP = 14.5;
+const PIPE_GAP_DECAY_RATE = 0.001;
+let PIPE_GAP = MAX_PIPE_GAP;
+let gapReductionProgress = 0;
+
+const GROUND_SPEED = 0.05;
+const GRAVITY = -0.01;
+const JUMP_STRENGTH = 0.14;
+const MAX_GRAVITY = -0.1;
+
+const MAX_ROTATION_DOWN = -Math.PI / 2;
+const ROTATION_UP = Math.PI / 6;
+const PIPE_INTERVAL = 150;
+
+// Cooldown configuration
+const GAME_OVER_COOLDOWN = 1000; // 1 second in milliseconds
+let canRestart = true;
+
 let scene = null;
 
 const pipes = [];
@@ -27,50 +70,6 @@ const createScene = function () {
 
     const camera = new BABYLON.ArcRotateCamera("Camera", -Math.PI / 2, Math.PI / 2, 16, new BABYLON.Vector3(0, 0, 0));
     const light = new BABYLON.PointLight("Point", new BABYLON.Vector3(5, 10, 5), scene);
-
-    // Constants for sprite sizes and scaling
-    const BACKGROUND_WIDTH = 144;
-    const BACKGROUND_HEIGHT = 256;
-    const GROUND_WIDTH = 168;
-    const GROUND_HEIGHT = 56;
-    const PLAYER_WIDTH = 17;
-    const PLAYER_HEIGHT = 12;
-    const PIPE_WIDTH = 26;
-    const PIPE_HEIGHT = 160;
-
-    const BACKGROUND_FLIP = 2.8;
-    const GROUND_FLIP = 0.85;
-    const BACKGROUND_SCALE = 20;
-    const GROUND_SCALE = 24;
-    const PLAYER_SCALE = 0.07;
-    const PIPE_SCALE = 0.07;
-
-    const BACKGROUND_Y_POSITION = 5;
-    const GROUND_Y_POSITION = -8;
-    const PLAYER_Y_INITIAL = 4;
-    const PLAYER_Y_FLOOR = -3.7;
-    const PLAYER_Y_ROOF = 6.5;
-
-    // Dynamic pipe gap variables
-    const MIN_PIPE_GAP = 13.5;
-    const MAX_PIPE_GAP = 14.5;
-    const PIPE_GAP_DECAY_RATE = 0.001;
-    let PIPE_GAP = MAX_PIPE_GAP;
-    let gapReductionProgress = 0;
-
-    const GROUND_SPEED = 0.05;
-    const GRAVITY = -0.01;
-    const JUMP_STRENGTH = 0.14;
-    const MAX_GRAVITY = -0.1;
-
-    const MAX_ROTATION_DOWN = -Math.PI / 2;
-    const ROTATION_UP = Math.PI / 6;
-    const PIPE_INTERVAL = 150;
-
-    // Cooldown configuration
-    const GAME_OVER_COOLDOWN = 1000; // 1 second in milliseconds
-    let canRestart = true;
-
     // Create sprite managers
     const spriteManagerBackground = new BABYLON.SpriteManager("backgroundManager", "https://raw.githubusercontent.com/xMichal123/publictests/main/flappy-bg.png", 1, { width: BACKGROUND_WIDTH, height: BACKGROUND_HEIGHT }, scene);
     const spriteManagerGround = new BABYLON.SpriteManager("groundManager", "https://raw.githubusercontent.com/xMichal123/publictests/main/flappy-gnd.png", 1, { width: GROUND_WIDTH, height: GROUND_HEIGHT }, scene);
