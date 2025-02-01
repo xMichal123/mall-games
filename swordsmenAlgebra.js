@@ -136,6 +136,7 @@ var createScene = function () {
 
     // Fight simulation: periodically select random pairs and make them fight
     scene.onBeforeRenderObservable.add(() => {
+        console.log(gameControlsManager.paused);
         if (gameControlsManager.paused) {
             return;
         }
