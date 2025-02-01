@@ -28,7 +28,7 @@ const winX = 1.5;
 const minSwitchX = 2;
 const startXOffset = 3;
 
-const failTrainPoints = -1;
+const failTrainPoints = -3;
 const levelUpTrainPoints = 3;
 
 let frameSpeed = trainSpeed;
