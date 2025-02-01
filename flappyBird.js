@@ -289,7 +289,7 @@ window.init = () => {
         }
     });
 
-    gameControlsManager.init("https://raw.githubusercontent.com/xMichal123/publictests/main/swordsmen-algebra-intro.webp",
+    gameControlsManager.init("https://raw.githubusercontent.com/xMichal123/mall-games/main/resources/flappy-bird-intro.webp",
         () => { },
         () => { resetGame(); },
         () => { },
