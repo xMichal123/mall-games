@@ -15,6 +15,7 @@ let scene = null;
 
 const createScene = function () {
     scene = new BABYLON.Scene(engine);
+    window.gameScene = scene;
 
     const camera = new BABYLON.ArcRotateCamera("Camera", -Math.PI / 2, Math.PI / 2, 16, new BABYLON.Vector3(0, 0, 0));
     const light = new BABYLON.PointLight("Point", new BABYLON.Vector3(5, 10, 5), scene);
