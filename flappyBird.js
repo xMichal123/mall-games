@@ -11,8 +11,10 @@ const gameOverModel = [
     scoreModel
 ];
 
+let scene = null;
+
 const createScene = function () {
-    const scene = new BABYLON.Scene(engine);
+    scene = new BABYLON.Scene(engine);
 
     const camera = new BABYLON.ArcRotateCamera("Camera", -Math.PI / 2, Math.PI / 2, 16, new BABYLON.Vector3(0, 0, 0));
     const light = new BABYLON.PointLight("Point", new BABYLON.Vector3(5, 10, 5), scene);
@@ -262,28 +264,6 @@ const createScene = function () {
         }
     });
 
-    window.init = () => {
-        guiManager = new GuiManager();
-    
-        scoreManager.init(scoreManagerModel, (updatedField, updatedOf) => {
-            if (updatedField == "L" || updatedField == "K") {
-                scoreModel.value = (levelModel.value - 1 ) * 100 + killsModel.value;
-            }
-        });
-    
-        gameControlsManager.init("https://raw.githubusercontent.com/xMichal123/publictests/main/swordsmen-algebra-intro.webp",
-            () => { 
-                makeTasks();
-                wheel.actionManager = wheelActionManager;
-            },
-            () => { restart(); },
-            () => { },
-            () => { }
-        );
-    
-        gameOverManager.init(() => { restart(); });
-    }
-
     const userAction = () => {
         if (!started && !gameOver) {
             started = true;
@@ -295,15 +275,41 @@ const createScene = function () {
         }
     };
 
-    window.addEventListener("keydown", (event) => {
-        if (event.key === " ") {
-            userAction();
+    scene.onKeyboardObservable.add((kbInfo) => {
+        switch (kbInfo.type) {
+            case BABYLON.KeyboardEventTypes.KEYDOWN:
+                switch (kbInfo.event.key) {
+                    case "Enter":
+                    case " ":
+                        userAction();
+                        break;
+                }
+                break;
         }
     });
-
-    window.addEventListener("pointerdown", () => {
+    
+    scene.onPointerDown = function (evt, pickResult) {
         userAction();
-    });
+    }
 
     return scene;
 };
+
+window.init = () => {
+    scoreManager.init(scoreManagerModel, (updatedField, updatedOf) => {
+        if (updatedField == "L") {
+            scoreModel.value = (levelModel.value - 1 ) * 100;
+        }
+    });
+
+    gameControlsManager.init("https://raw.githubusercontent.com/xMichal123/publictests/main/swordsmen-algebra-intro.webp",
+        () => { },
+        () => { resetGame(); },
+        () => { },
+        () => { }
+    );
+
+    gameOverManager.init(() => { resetGame(); });
+}
+
+createScene();
