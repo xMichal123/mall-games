@@ -63,6 +63,7 @@ let started = false;
 let ended = false;
 let gameOver = false;
 let player = null;
+let playerObject = null;
 
 const createScene = function () {
     scene = new BABYLON.Scene(engine);
@@ -104,7 +105,7 @@ const createScene = function () {
     ground.width = GROUND_SCALE;
     ground.height = (GROUND_HEIGHT / GROUND_WIDTH) * GROUND_SCALE;
 
-    const playerObject = addSprite("player0", spriteManagerPlayer, PLAYER_WIDTH, PLAYER_HEIGHT, PLAYER_SCALE);
+    playerObject = addSprite("player0", spriteManagerPlayer, PLAYER_WIDTH, PLAYER_HEIGHT, PLAYER_SCALE);
     player = playerObject.sprite;
     player.playAnimation(0, 2, true, 100);
     player.position.y = PLAYER_Y_INITIAL;
