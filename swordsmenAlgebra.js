@@ -342,12 +342,8 @@ window.init = () => {
     guiManager = new GuiManager();
 
     scoreManager.init(scoreManagerModel, (updatedField, updatedOf) => {
-        if (updatedField == "L") {
-            scoreModel.value = (levelModel.value - 1 ) * 100;
-        }
-
-        if (updatedField == "K" && updatedOf > 0) {
-            scoreModel.value += updatedOf;
+        if (updatedField == "L" || updatedField == "K") {
+            scoreModel.value = (levelModel.value - 1 ) * 100 + killsModel.Value;
         }
     });
 
