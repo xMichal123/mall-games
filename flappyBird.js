@@ -225,32 +225,6 @@ const createScene = function () {
         }
     });
 
-    function resetGame() {
-        levelModel.value = 0; // Reset GUI text
-
-        pipes.forEach((pipe) => {
-            pipe.up.sprite.dispose();
-            pipe.down.sprite.dispose();
-            pipe.up.boundingBox.dispose();
-            pipe.down.boundingBox.dispose();
-        });
-        pipes.length = 0; // Clear the pipes array
-
-        player.position.y = PLAYER_Y_INITIAL;
-        verticalVelocity = 0;
-        pipeFrameCount = 0;
-        PIPE_GAP = MAX_PIPE_GAP;
-        gapReductionProgress = 0;
-        started = false;
-        ended = false;
-        gameOver = false;
-        player.playAnimation(0, 2, true, 100);
-
-        // Reset bird rotation
-        player.angle = 0;
-        playerObject.boundingBox.rotation.z = player.angle;
-    }
-
     const userAction = () => {
         if (!started && !gameOver) {
             started = true;
@@ -297,6 +271,32 @@ window.init = () => {
     );
 
     gameOverManager.init(() => { resetGame(); });
+}
+
+function resetGame() {
+    levelModel.value = 0; // Reset GUI text
+
+    pipes.forEach((pipe) => {
+        pipe.up.sprite.dispose();
+        pipe.down.sprite.dispose();
+        pipe.up.boundingBox.dispose();
+        pipe.down.boundingBox.dispose();
+    });
+    pipes.length = 0; // Clear the pipes array
+
+    player.position.y = PLAYER_Y_INITIAL;
+    verticalVelocity = 0;
+    pipeFrameCount = 0;
+    PIPE_GAP = MAX_PIPE_GAP;
+    gapReductionProgress = 0;
+    started = false;
+    ended = false;
+    gameOver = false;
+    player.playAnimation(0, 2, true, 100);
+
+    // Reset bird rotation
+    player.angle = 0;
+    playerObject.boundingBox.rotation.z = player.angle;
 }
 
 createScene();
