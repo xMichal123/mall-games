@@ -13,6 +13,13 @@ const gameOverModel = [
 
 let scene = null;
 
+const pipes = [];
+let pipeFrameCount = 0;
+let verticalVelocity = 0;
+let started = false;
+let ended = false;
+let gameOver = false;
+
 const createScene = function () {
     scene = new BABYLON.Scene(engine);
     window.gameScene = scene;
@@ -103,13 +110,6 @@ const createScene = function () {
     player.position.y = PLAYER_Y_INITIAL;
     playerObject.boundingBox.position.y = PLAYER_Y_INITIAL;
 
-    const pipes = [];
-    let pipeFrameCount = 0;
-    let verticalVelocity = 0;
-    let started = false;
-    let ended = false;
-    let gameOver = false;
-
     function endNow() {
         player.stopAnimation();
         ended = true;
@@ -150,33 +150,6 @@ const createScene = function () {
 
     function checkCollision(playerBox, pipeBox) {
         return playerBox.intersectsMesh(pipeBox, false);
-    }
-
-    function resetGame() {
-        levelModel.value = 0; // Reset GUI text
-        console.log("Game restarted");
-
-        pipes.forEach((pipe) => {
-            pipe.up.sprite.dispose();
-            pipe.down.sprite.dispose();
-            pipe.up.boundingBox.dispose();
-            pipe.down.boundingBox.dispose();
-        });
-        pipes.length = 0; // Clear the pipes array
-
-        player.position.y = PLAYER_Y_INITIAL;
-        verticalVelocity = 0;
-        pipeFrameCount = 0;
-        PIPE_GAP = MAX_PIPE_GAP;
-        gapReductionProgress = 0;
-        started = false;
-        ended = false;
-        gameOver = false;
-        player.playAnimation(0, 2, true, 100);
-
-        // Reset bird rotation
-        player.angle = 0;
-        playerObject.boundingBox.rotation.z = player.angle;
     }
 
     scene.onBeforeRenderObservable.add(() => {
@@ -251,6 +224,32 @@ const createScene = function () {
             reducePipeGap();
         }
     });
+
+    function resetGame() {
+        levelModel.value = 0; // Reset GUI text
+
+        pipes.forEach((pipe) => {
+            pipe.up.sprite.dispose();
+            pipe.down.sprite.dispose();
+            pipe.up.boundingBox.dispose();
+            pipe.down.boundingBox.dispose();
+        });
+        pipes.length = 0; // Clear the pipes array
+
+        player.position.y = PLAYER_Y_INITIAL;
+        verticalVelocity = 0;
+        pipeFrameCount = 0;
+        PIPE_GAP = MAX_PIPE_GAP;
+        gapReductionProgress = 0;
+        started = false;
+        ended = false;
+        gameOver = false;
+        player.playAnimation(0, 2, true, 100);
+
+        // Reset bird rotation
+        player.angle = 0;
+        playerObject.boundingBox.rotation.z = player.angle;
+    }
 
     const userAction = () => {
         if (!started && !gameOver) {
