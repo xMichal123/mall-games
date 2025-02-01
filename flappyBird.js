@@ -275,7 +275,7 @@ window.init = () => {
 }
 
 function resetGame() {
-    levelModel.value = 0; // Reset GUI text
+    levelModel.value = 1; // Reset GUI text
 
     pipes.forEach((pipe) => {
         pipe.up.sprite.dispose();
