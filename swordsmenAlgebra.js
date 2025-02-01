@@ -136,6 +136,10 @@ var createScene = function () {
 
     // Fight simulation: periodically select random pairs and make them fight
     scene.onBeforeRenderObservable.add(() => {
+        if (gameControlsManager.paused) {
+            return;
+        }
+        
         if (army1.soldiers.length > 0 && army2.soldiers.length > 0) {
             // Move each soldier in army1 toward the closest soldier in army2
             army1.soldiers.forEach((soldier1, index1) => {
