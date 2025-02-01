@@ -58,21 +58,9 @@ const createScene = function () {
     const ROTATION_UP = Math.PI / 6;
     const PIPE_INTERVAL = 150;
 
-    let pipePassCount = 0; // Track number of pipes passed
-
     // Cooldown configuration
     const GAME_OVER_COOLDOWN = 1000; // 1 second in milliseconds
     let canRestart = true;
-
-    // GUI for displaying passed pipes
-    const advancedTexture = BABYLON.GUI.AdvancedDynamicTexture.CreateFullscreenUI("UI");
-    const pipeCountText = new BABYLON.GUI.TextBlock();
-    pipeCountText.text = "0";
-    pipeCountText.color = "white";
-    pipeCountText.fontSize = 24;
-    pipeCountText.top = "-40%";
-    pipeCountText.left = "-40%";
-    advancedTexture.addControl(pipeCountText);
 
     // Create sprite managers
     const spriteManagerBackground = new BABYLON.SpriteManager("backgroundManager", "https://raw.githubusercontent.com/xMichal123/publictests/main/flappy-bg.png", 1, { width: BACKGROUND_WIDTH, height: BACKGROUND_HEIGHT }, scene);
@@ -163,8 +151,7 @@ const createScene = function () {
     }
 
     function resetGame() {
-        pipePassCount = 0;
-        pipeCountText.text = "0"; // Reset GUI text
+        levelModel.value = 0; // Reset GUI text
         console.log("Game restarted");
 
         pipes.forEach((pipe) => {
@@ -216,8 +203,7 @@ const createScene = function () {
 
                 if (!passed && (player.position.x - player.width / 2) > (up.sprite.position.x + up.sprite.width / 2)) {
                     pipes[i].passed = true;
-                    pipePassCount++;
-                    pipeCountText.text = pipePassCount; // Update GUI text
+                    levelModel.value++;
                 }
 
                 if (up.sprite.position.x < -10) {
