@@ -136,7 +136,6 @@ var createScene = function () {
 
     // Fight simulation: periodically select random pairs and make them fight
     scene.onBeforeRenderObservable.add(() => {
-        console.log(gameControlsManager.paused);
         if (gameControlsManager.paused) {
             return;
         }
@@ -710,8 +709,8 @@ function generateMathTask(complexity, solutionRange) {
 
     // Check if the solution is an integer and within the desired range
     if (Number.isInteger(solution) && solution > 0 && solution <= solutionRange) {
-      console.log(`Math Task: ${expression} = ?`);
-      console.log(`Solution: ${solution}`);
+      //console.log(`Math Task: ${expression} = ?`);
+      //console.log(`Solution: ${solution}`);
       return expression;
     }
   }
