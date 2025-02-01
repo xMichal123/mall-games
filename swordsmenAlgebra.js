@@ -485,6 +485,10 @@ class Soldier {
 
     // Update animation frames based on active animation
     updateAnimation(scene) {
+        if (gameControlsManager.paused) {
+            return;
+        }
+        
         scene.onBeforeRenderObservable.add(() => {
             if (!this.isBlinking) {
                 let now = Date.now();
