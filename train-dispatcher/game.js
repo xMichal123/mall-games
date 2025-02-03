@@ -162,7 +162,7 @@ window.init = () => {
         }
     });
 
-    gameControlsManager.init("https://raw.githubusercontent.com/xMichal123/publictests/main/train-dispatcher.webp",
+    gameControlsManager.init("https://raw.githubusercontent.com/xMichal123/mall-games/main/train-dispatcher/intro.webp",
         () => { gameManager.start(true); },
         () => { gameManager.restart(); },
         () => { trainDispatcher.pause(); },
