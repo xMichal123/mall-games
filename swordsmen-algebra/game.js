@@ -347,7 +347,7 @@ window.init = () => {
         }
     });
 
-    gameControlsManager.init("https://raw.githubusercontent.com/xMichal123/publictests/main/swordsmen-algebra-intro.webp",
+    gameControlsManager.init("https://raw.githubusercontent.com/xMichal123/mall-games/main/swordsmen-algebra/intro.webp",
         () => { 
             makeTasks();
             wheel.actionManager = wheelActionManager;
