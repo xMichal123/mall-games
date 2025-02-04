@@ -78,7 +78,7 @@ var createScene = async function () {
     flatGround.position.y = -0.001;
 
     var flatGroundMaterial = new BABYLON.StandardMaterial("flatGroundMat", scene);
-    flatGroundMaterial.diffuseTexture = new BABYLON.Texture("textures/sand.jpg", scene); // Replace with your texture path
+    flatGroundMaterial.diffuseTexture = new BABYLON.Texture("https://raw.githubusercontent.com/xMichal123/mall-games/main/resources/sand.jpg", scene); // Replace with your texture path
     flatGroundMaterial.diffuseTexture.uScale = 10; // Tiling
     flatGroundMaterial.diffuseTexture.vScale = 10;
     flatGround.material = flatGroundMaterial;
@@ -94,14 +94,14 @@ var createScene = async function () {
     var heightMapMaterial = new BABYLON.TerrainMaterial("heightMapMat", scene);
     heightMapMaterial.mixTexture = new BABYLON.Texture("https://raw.githubusercontent.com/xMichal123/publictests/main/rgb-map.png", scene); // Replace with your texture map path
         
-    heightMapMaterial.diffuseTexture1 = new BABYLON.Texture("textures/sand.jpg", scene);
-    heightMapMaterial.diffuseTexture3 = new BABYLON.Texture("textures/grass.png", scene);
-    heightMapMaterial.diffuseTexture2 = new BABYLON.Texture("textures/rock.png", scene);
+    heightMapMaterial.diffuseTexture1 = new BABYLON.Texture("https://raw.githubusercontent.com/xMichal123/mall-games/main/resources/sand.jpg", scene);
+    heightMapMaterial.diffuseTexture3 = new BABYLON.Texture("https://raw.githubusercontent.com/xMichal123/mall-games/main/resources/grass.png", scene);
+    heightMapMaterial.diffuseTexture2 = new BABYLON.Texture("https://raw.githubusercontent.com/xMichal123/mall-games/main/resources/rock.png", scene);
     
 	// Bump textures according to the previously set diffuse textures
     //terrainMaterial.bumpTexture1 = new BABYLON.Texture("textures/floor_bump.png", scene);
-    heightMapMaterial.bumpTexture3 = new BABYLON.Texture("textures/grassn.png", scene);
-    heightMapMaterial.bumpTexture2 = new BABYLON.Texture("textures/rockn.png", scene);
+    heightMapMaterial.bumpTexture3 = new BABYLON.Texture("https://raw.githubusercontent.com/xMichal123/mall-games/main/resources/grassn.png", scene);
+    heightMapMaterial.bumpTexture2 = new BABYLON.Texture("https://raw.githubusercontent.com/xMichal123/mall-games/main/resources/rockn.png", scene);
    
     // Rescale textures according to the terrain
     heightMapMaterial.diffuseTexture1.uScale = heightMapMaterial.diffuseTexture1.vScale = 10;
