@@ -144,7 +144,6 @@ var createScene = async function () {
 
     // Watch for browser/canvas resize events
     window.addEventListener('resize', function() {
-        engine.resize();
         cameraManager.manage();
     });
 
