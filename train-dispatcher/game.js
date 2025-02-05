@@ -95,7 +95,7 @@ var createScene = async function () {
     heightMapMaterial.mixTexture = new BABYLON.Texture("https://raw.githubusercontent.com/xMichal123/publictests/main/rgb-map.png", scene); // Replace with your texture map path
         
     heightMapMaterial.diffuseTexture1 = new BABYLON.Texture("https://raw.githubusercontent.com/xMichal123/mall-games/main/resources/sand.jpg", scene);
-    heightMapMaterial.diffuseTexture3 = new BABYLON.Texture("https://raw.githubusercontent.com/xMichal123/mall-games/main/resources/grass.png", scene);
+    heightMapMaterial.diffuseTexture3 = new BABYLON.Texture("https://raw.githubusercontent.com/xMichal123/mall-games/main/resources/grass.jpg", scene);
     heightMapMaterial.diffuseTexture2 = new BABYLON.Texture("https://raw.githubusercontent.com/xMichal123/mall-games/main/resources/rock.png", scene);
     
 	// Bump textures according to the previously set diffuse textures
