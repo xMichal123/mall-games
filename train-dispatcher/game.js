@@ -152,7 +152,7 @@ var createScene = async function () {
 
 window.init = () => {
     scoreManager.init(scoreManagerModel, (updatedField, updatedOf) => {
-        let multi = Math.round(Math.pow(2, (levelModel.value + 8) / 8));
+        let multi = Math.round(Math.pow(2, (levelModel.value + 4) / 4));
         if (updatedField == "L") {
             scoreModel.value += 10 * multi;
         }
