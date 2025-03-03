@@ -163,7 +163,7 @@ window.init = () => {
     });
 
     gameControlsManager.init("https://raw.githubusercontent.com/xMichal123/mall-games/main/train-dispatcher/intro.webp",
-        () => { if (gameManager) { gameManager.start(true); } },
+        () => { if (gameManager) { gameManager.start(true); return true; } else { return false; } },
         () => { gameManager.restart(); },
         () => { trainDispatcher.pause(); },
         () => { trainDispatcher.resume(); }
