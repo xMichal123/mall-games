@@ -265,7 +265,7 @@ window.init = () => {
     });
 
     gameControlsManager.init("https://raw.githubusercontent.com/xMichal123/mall-games/main/flappy-bird/intro.webp",
-        () => { },
+        () => { return true; },
         () => { resetGame(); },
         () => { },
         () => { }
